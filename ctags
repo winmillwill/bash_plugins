@@ -1,0 +1,13 @@
+#! /bin/bash
+function dir_tags {
+  pushd $1
+  [[ -z CTAGS_OPTS ]] && opts=$CTAGS_OPTS || opts=""
+  [[ -z CTAGS_ARGS ]] && args=$CTAGS_ARGS || args="*"
+  ctags $opts $args &
+  popd
+}
+
+function dir_tags_recurse {
+  pwd
+  find * -type d | while read dir; do dir_tags "$dir"; done
+}
